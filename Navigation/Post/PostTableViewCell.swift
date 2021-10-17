@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import StorageService
 
 class PostTableViewCell: UITableViewCell {
     
@@ -18,6 +19,7 @@ class PostTableViewCell: UITableViewCell {
             postViewsLabel.text = "Views: \(String(describing: (post?.views ?? 0)))"
         }
     }
+    
     
     var postTitleLabel: UILabel = {
         let title = UILabel()
