@@ -18,8 +18,12 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
+    #if DEBUG
         view.backgroundColor = .white
+    #else
+        view.backgroundColor = .systemYellow
+    #endif
         
         setupTableView()
         setupConstraints()
