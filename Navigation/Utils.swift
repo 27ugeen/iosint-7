@@ -9,10 +9,14 @@ import Foundation
 import UIKit
 import iOSIntPackage
 
-public func putFilterOnImage(_ image: UIImage, _ filterOn: ColorFilter) -> UIImage {
-    var filteredImage: UIImage?
-    ImageProcessor().processImage(sourceImage: image, filter: filterOn) { processedImage in
-        filteredImage = processedImage
+class FilteredImage {
+    public static let shared = FilteredImage()
+    
+    func putFilterOnImage(_ image: UIImage, _ filterOn: ColorFilter) -> UIImage {
+        var filteredImage: UIImage?
+        ImageProcessor().processImage(sourceImage: image, filter: filterOn) { processedImage in
+            filteredImage = processedImage
+        }
+        return filteredImage ?? image
     }
-    return filteredImage ?? image
 }
