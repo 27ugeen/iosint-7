@@ -8,23 +8,23 @@
 import Foundation
 import UIKit
 
-struct Post {
-    var title: String
-    let author: String?
-    let image: UIImage
-    let description: String?
-    let likes: Int
-    let views: Int
+public struct Post {
+    public var title: String
+    public let author: String?
+    public let image: UIImage
+    public let description: String?
+    public let likes: Int
+    public let views: Int
 }
 
-struct PostSection {
-    var title: String?
-    let posts: [Post]
+public struct PostSection {
+    public var title: String?
+    public let posts: [Post]
 }
 
-struct PostsStorage {
+public struct PostsStorage {
     
-    static let tableModel = [
+    public static let tableModel = [
         PostSection(posts: [
             Post(title: "Tesla profit surge driven by record car deliveries",
                  author: "Elon Mask",
