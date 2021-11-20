@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import StorageService
 
 class ProfileViewController: UIViewController {
     
@@ -33,15 +34,15 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         
     #if DEBUG
+        view.backgroundColor = .white
         let testUser = TestUserService().showUserInfo(userName: userLoginName)
         print("Current user \"\(testUser.userFullName)\" is logged in")
     #else
+        view.backgroundColor = .systemYellow
         let currentUser = CurrentUserService().showUserInfo(userName: userLoginName)
         print("Current user \"\(currentUser.userFullName)\" is logged in")
     #endif
-        
-        view.backgroundColor = .white
-        
+
         setupTableView()
         setupConstraints()
     }

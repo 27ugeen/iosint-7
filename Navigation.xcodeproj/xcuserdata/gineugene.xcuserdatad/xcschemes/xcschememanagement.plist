@@ -10,7 +10,7 @@
 			<integer>2</integer>
 		</dict>
 		<key>Navigation-Debug.xcscheme_^#shared#^_</key>
-		<dict>
+		<dict>lop
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
@@ -28,6 +28,24 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>112A120626A6156D005F46A6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>112A120626A6156D005F46A6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>11BA8EA7271CB44600178202</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>11BA8EB0271CB44600178202</key>
 		<dict>
 			<key>primary</key>
 			<true/>
