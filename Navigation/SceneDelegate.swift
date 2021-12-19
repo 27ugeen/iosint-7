@@ -11,37 +11,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     
+    let appCoordinator = AppCoordinator()
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
-        guard let scene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(windowScene: scene)
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        
+        window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
         
-        let tabBarController = UITabBarController()
-        
-        let feedVC = FeedViewController()
-        
-        let loginVC = LogInViewController()
-        loginVC.title = "Profile"
-        
-        let feedNavVC = UINavigationController(rootViewController: feedVC)
-        feedNavVC.tabBarItem = UITabBarItem(title: feedVC.title, image: UIImage(systemName: "house.fill"), tag: 0)
-        
-        let loginNavVC = UINavigationController(rootViewController: loginVC)
-        
-        let loginFactory = MyLoginFactory().self
-        let checkedUser = loginFactory.checkUserLogin()
-        loginNavVC.delegate = checkedUser as? UINavigationControllerDelegate
-        
-        loginNavVC.isNavigationBarHidden = true
-        
-        loginNavVC.tabBarItem = UITabBarItem(title: loginVC.title, image: UIImage(systemName: "person.fill"), tag: 1)
-        
-        
-        tabBarController.viewControllers = [feedNavVC, loginNavVC]
-        
-        window?.rootViewController = tabBarController
+        window?.rootViewController = appCoordinator.start()
     }
-    
 }
 

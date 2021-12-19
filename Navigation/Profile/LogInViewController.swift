@@ -9,6 +9,7 @@ import UIKit
 
 class LogInViewController: UIViewController {
     
+    weak var coordinator: ProfileBaseCoordinator?
     weak var delegate: LoginViewControllerDelegate?
     
     let scrollView: UIScrollView = {
@@ -70,6 +71,15 @@ class LogInViewController: UIViewController {
     
     let loginButton = MagicButton(title: "Log In", titleColor: .white)
     
+    init(coordinator: ProfileBaseCoordinator) {
+        super.init(nibName: nil, bundle: nil)
+        self.coordinator = coordinator
+    }
+    
+    required init?(coder: NSCoder) {
+        nil
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -105,22 +115,7 @@ extension LogInViewController {
         loginButton.clipsToBounds = true
         
         loginButton.onTap = {
-            var vc: ProfileViewController
-        #if DEBUG
-            vc = ProfileViewController(userService: TestUserService(), userName: "testUser")
-        #else
-            let name = loginTextField.text ?? ""
-            let password = passwordTextField.text ?? ""
-            let loginFactory = MyLoginFactory()
-            let checkedUser = loginFactory.checkUserLogin()
-            let status: Bool = checkedUser.didTapOnButton(self, enteredLogin: name, enteredPassword: password)
-            guard status else {
-                print("Try again")
-                return
-            }
-            vc = ProfileViewController(userService: CurrentUserService(), userName: name )
-        #endif
-            self.navigationController?.pushViewController(vc, animated: true)
+            self.coordinator?.goToProfile2Screen()
         }
     }
 }

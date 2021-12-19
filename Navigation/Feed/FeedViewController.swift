@@ -9,8 +9,19 @@ import UIKit
 
 class FeedViewController: UIViewController {
     
+    weak var coordinator: FeedBaseCoordinator?
+    
     let buttonTop = MagicButton(title: "Top Button", titleColor: .white)
     let buttonBot = MagicButton(title: "Bot Button", titleColor: .white)
+    
+    init(coordinator: FeedBaseCoordinator) {
+        super.init(nibName: nil, bundle: nil)
+        self.coordinator = coordinator
+    }
+    
+    required init?(coder: NSCoder) {
+        nil
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,12 +32,10 @@ class FeedViewController: UIViewController {
         buttonBot.setTitleColor(.purple, for: .highlighted)
         
         buttonTop.onTap = {
-            let vc = PostViewController()
-            self.navigationController?.pushViewController(vc, animated: true)
+            self.coordinator?.goToPostScreen()
         }
         buttonBot.onTap = {
-            let vc = PostViewController()
-            self.navigationController?.pushViewController(vc, animated: true)
+            self.coordinator?.goToPostScreen()
         }
         
         setupStackView()
