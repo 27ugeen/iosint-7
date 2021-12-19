@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FeedViewController: UIViewController {
+class FeedViewController: UIViewController, FeedBaseCoordinated {
     
     weak var coordinator: FeedBaseCoordinator?
     

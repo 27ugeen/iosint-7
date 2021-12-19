@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, ProfileBaseCoordinated {
     
     weak var coordinator: ProfileBaseCoordinator?
     
