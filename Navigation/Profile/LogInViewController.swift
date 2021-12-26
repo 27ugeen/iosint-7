@@ -9,6 +9,8 @@ import UIKit
 
 class LogInViewController: UIViewController {
     
+    var delegate: LoginViewControllerDelegate
+    
     let scrollView: UIScrollView = {
         let scroll = UIScrollView()
         scroll.translatesAutoresizingMaskIntoConstraints = false
@@ -85,6 +87,15 @@ class LogInViewController: UIViewController {
         return button
     }()
     
+    init(delegate: LoginViewControllerDelegate) {
+        self.delegate = delegate
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        nil
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -111,8 +122,14 @@ class LogInViewController: UIViewController {
     #if DEBUG
         vc = ProfileViewController(userService: TestUserService(), userName: "testUser")
     #else
-        let loginName = loginTextField.text
-        vc = ProfileViewController(userService: CurrentUserService(), userName: loginName ?? "nothing entered")
+        let name = loginTextField.text ?? ""
+        let password = passwordTextField.text ?? ""
+        let status: Bool = (delegate.didTapOnButton(self, enteredLogin: name, enteredPassword: password))
+        guard status else {
+            print("Try again")
+            return
+        }
+        vc = ProfileViewController(userService: CurrentUserService(), userName: name )
     #endif
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -168,7 +185,6 @@ extension LogInViewController {
     }
 }
 
-
 private extension LogInViewController {
     @objc
     func keyboardWillShow(notification: NSNotification) {
@@ -185,12 +201,33 @@ private extension LogInViewController {
     }
 }
 
-extension UIImage {
-    func alpha(_ value:CGFloat) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(size, false, scale)
-        draw(at: CGPoint.zero, blendMode: .normal, alpha: value)
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return newImage!
+protocol LoginViewControllerDelegate: AnyObject {
+
+    func didTapOnButton(_ controller: UIViewController, enteredLogin: String, enteredPassword: String) -> Bool
+}
+
+class LoginInspector: LoginViewControllerDelegate {
+    
+    private let loginUseCase: Checker
+    
+    init(useCase: Checker) {
+        self.loginUseCase = useCase
+    }
+    
+    func didTapOnButton(_ controller: UIViewController, enteredLogin: String, enteredPassword: String) -> Bool {
+        return loginUseCase.checkLoginPassword(userLogin: enteredLogin, userPassword: enteredPassword)
+    }
+}
+
+/// *FACTORY*
+protocol LoginFactory {
+    func createChecker() -> LoginInspector
+}
+
+/// *FACTORY - IMPLEMENTATION*
+class MyLoginFactory: LoginFactory {
+  func createChecker() -> LoginInspector {
+      let loginInspector = LoginInspector(useCase: Checker.instance)
+        return loginInspector
     }
 }

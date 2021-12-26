@@ -11,8 +11,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     
+    let loginInspector = MyLoginFactory().createChecker()
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        
+
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         window?.makeKeyAndVisible()
@@ -21,15 +23,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let feedVC = FeedViewController()
         
-        let loginVC = LogInViewController()
+        let loginVC = LogInViewController(delegate: loginInspector)
         loginVC.title = "Profile"
         
         let feedNavVC = UINavigationController(rootViewController: feedVC)
         feedNavVC.tabBarItem = UITabBarItem(title: feedVC.title, image: UIImage(systemName: "house.fill"), tag: 0)
         
         let loginNavVC = UINavigationController(rootViewController: loginVC)
-        loginNavVC.isNavigationBarHidden = true
         
+        loginNavVC.isNavigationBarHidden = true
         loginNavVC.tabBarItem = UITabBarItem(title: loginVC.title, image: UIImage(systemName: "person.fill"), tag: 1)
         
         tabBarController.viewControllers = [feedNavVC, loginNavVC]
