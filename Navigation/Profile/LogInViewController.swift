@@ -215,10 +215,7 @@ class LoginInspector: LoginViewControllerDelegate {
     }
     
     func didTapOnButton(_ controller: UIViewController, enteredLogin: String, enteredPassword: String) -> Bool {
-        guard loginUseCase.checkLoginPassword(userLogin: enteredLogin, userPassword: enteredPassword) else {
-            return false
-        }
-        return true
+        return loginUseCase.checkLoginPassword(userLogin: enteredLogin, userPassword: enteredPassword)
     }
 }
 
