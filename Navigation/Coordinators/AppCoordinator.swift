@@ -8,12 +8,12 @@
 import Foundation
 import UIKit
 
-class AppCoordinator: AppBaseCoordinator {
+class AppCoordinator: AppBaseCoordinatorProtocol {
     
-    var parentCoordinator: AppBaseCoordinator?
+    var parentCoordinator: AppBaseCoordinatorProtocol?
     
-    lazy var feedCoordinator: FeedBaseCoordinator = FeedCoordinator()
-    lazy var profileCoordinator: ProfileBaseCoordinator = ProfileCoordinator()
+    lazy var feedCoordinator: FeedBaseCoordinatorProtocol = FeedCoordinator()
+    lazy var profileCoordinator: ProfileBaseCoordinatorProtocol = ProfileCoordinator()
     
     var rootViewController: UIViewController = UITabBarController()
     

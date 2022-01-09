@@ -8,17 +8,17 @@
 import Foundation
 import UIKit
 
-protocol FlowCoordinator: AnyObject {
-    var parentCoordinator: AppBaseCoordinator? { get set }
+protocol FlowCoordinatorProtocol: AnyObject {
+    var parentCoordinator: AppBaseCoordinatorProtocol? { get set }
 }
 
-protocol Coordinator: FlowCoordinator {
+protocol CoordinatorProtocol: FlowCoordinatorProtocol {
     var rootViewController: UIViewController { get set }
     
     func start() -> UIViewController
 }
 
-extension Coordinator {
+extension CoordinatorProtocol {
     var navigationRootViewController: UINavigationController? {
         get {
             (rootViewController as? UINavigationController)

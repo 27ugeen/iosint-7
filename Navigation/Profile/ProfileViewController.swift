@@ -7,9 +7,9 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, ProfileBaseCoordinated {
+class ProfileViewController: UIViewController {
     
-    weak var coordinator: ProfileBaseCoordinator?
+    var goToPhotoGalleryAction: (() -> Void)?
     
     let tableView = UITableView(frame: .zero, style: .grouped)
     
@@ -20,10 +20,10 @@ class ProfileViewController: UIViewController, ProfileBaseCoordinated {
     let userService: UserServiceProtocol
     var userLoginName: String
     
-    init(userService: UserServiceProtocol, userName: String, coordinator: ProfileBaseCoordinator) {
+    init(userService: UserServiceProtocol, userName: String) {
         self.userService = userService
         self.userLoginName = userName
-        self.coordinator = coordinator
+//        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -107,7 +107,7 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.row == 0 {
-            self.coordinator?.goToPhotosGallery()
+            self.goToPhotoGalleryAction?()
         }
     }
     

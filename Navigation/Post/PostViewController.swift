@@ -9,16 +9,7 @@ import UIKit
 
 class PostViewController: UIViewController {
     
-    weak var coordinator: FeedBaseCoordinator?
-    
-    init(coordinator: FeedBaseCoordinator) {
-        super.init(nibName: nil, bundle: nil)
-        self.coordinator = coordinator
-    }
-    
-    required init?(coder: NSCoder) {
-        nil
-    }
+    var goToInfoAction: (() -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +23,6 @@ class PostViewController: UIViewController {
     }
     
     @objc func postTapped() {
-        self.coordinator?.goToInfoScreen()
+        self.goToInfoAction?()
     }
 }

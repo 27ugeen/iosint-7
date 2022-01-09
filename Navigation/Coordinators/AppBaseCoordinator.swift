@@ -7,15 +7,15 @@
 
 import Foundation
 
-protocol AppBaseCoordinator: Coordinator {
-    var feedCoordinator: FeedBaseCoordinator { get }
-    var profileCoordinator: ProfileBaseCoordinator { get }
+protocol AppBaseCoordinatorProtocol: CoordinatorProtocol {
+    var feedCoordinator: FeedBaseCoordinatorProtocol { get }
+    var profileCoordinator: ProfileBaseCoordinatorProtocol { get }
 }
 
-protocol FeedBaseCoordinated {
-    var coordinator: FeedBaseCoordinator? { get }
+protocol FeedBaseCoordinatedProtocol {
+    var coordinator: FeedBaseCoordinatorProtocol? { get }
 }
 
-protocol ProfileBaseCoordinated {
-    var coordinator: ProfileBaseCoordinator? { get }
+protocol ProfileBaseCoordinatedProtocol {
+    var coordinator: ProfileBaseCoordinatorProtocol? { get }
 }

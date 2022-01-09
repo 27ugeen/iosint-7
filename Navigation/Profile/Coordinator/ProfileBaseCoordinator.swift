@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol ProfileBaseCoordinator: Coordinator {
+protocol ProfileBaseCoordinatorProtocol: CoordinatorProtocol {
     func goToProfile2Screen()
     func goToPhotosGallery()
 }

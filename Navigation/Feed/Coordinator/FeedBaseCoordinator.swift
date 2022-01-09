@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol FeedBaseCoordinator: Coordinator {
+protocol FeedBaseCoordinatorProtocol: CoordinatorProtocol {
     func goToPostScreen()
     func goToInfoScreen()
 }

@@ -13,7 +13,7 @@ class Checker {
     
     private let login = "User"
     
-    private let pswd = "StrongPassword"
+    private let pswd = "123"
     
     private init() {}
     
