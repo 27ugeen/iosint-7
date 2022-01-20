@@ -10,13 +10,16 @@ import UIKit
 
 final class MagicButton: UIButton {
     
-    var onTap: (() -> Void)?
+    private let onTap: () -> Void
     
-    init(title: String, titleColor: UIColor) {
+    init(title: String, titleColor: UIColor, onTap: @escaping () -> Void) {
+        self.onTap = onTap
         super.init(frame: .zero)
+        
         translatesAutoresizingMaskIntoConstraints = false
         self.setTitle(title, for: .normal)
         self.setTitleColor(titleColor, for: .normal)
+        
         self.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
     
@@ -25,6 +28,6 @@ final class MagicButton: UIButton {
     }
     
     @objc private func buttonTapped() {
-        onTap?()
+        self.onTap()
     }
 }

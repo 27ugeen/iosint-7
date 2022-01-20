@@ -23,7 +23,6 @@ class ProfileViewController: UIViewController {
     init(userService: UserServiceProtocol, userName: String) {
         self.userService = userService
         self.userLoginName = userName
-//        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
 

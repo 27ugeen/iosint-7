@@ -12,6 +12,8 @@ class AppCoordinator: AppBaseCoordinatorProtocol {
     
     var parentCoordinator: AppBaseCoordinatorProtocol?
     
+    let feedFactory = FeedModuleFactory()
+    
     lazy var feedCoordinator: FeedBaseCoordinatorProtocol = FeedCoordinator()
     lazy var profileCoordinator: ProfileBaseCoordinatorProtocol = ProfileCoordinator()
     
