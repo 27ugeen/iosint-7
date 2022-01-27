@@ -32,7 +32,7 @@ class ProfileCoordinator: ProfileBaseCoordinatorProtocol {
         let name = loginVC.loginTextField.text
         let password = loginVC.passwordTextField.text
         let loginFactory = MyLoginFactory()
-        let checkedUser = loginFactory.checkUserLogin()
+        let checkedUser = loginFactory.createChecker()
         let status: Bool = checkedUser.didTapOnButton(loginVC, enteredLogin: name!, enteredPassword: password!)
         guard status else {
             print("Try again")

@@ -21,7 +21,7 @@ class FeedViewController: UIViewController {
         self.goToPostsAction?()
     }
     
-    let checkTextField: UITextField = {
+    lazy var checkTextField: UITextField = {
         let text = UITextField()
         text.translatesAutoresizingMaskIntoConstraints = false
         text.font = UIFont.systemFont(ofSize: 15, weight: .regular)
@@ -35,7 +35,7 @@ class FeedViewController: UIViewController {
         return text
     }()
     
-    let checkedLAbel: UILabel = {
+    lazy var checkedLAbel: UILabel = {
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
         title.font = UIFont.systemFont(ofSize: 20, weight: .bold)
