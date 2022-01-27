@@ -11,6 +11,8 @@ class LogInViewController: UIViewController {
     
     weak var delegate: LoginViewControllerDelegate?
     
+    var loginAction: (() -> Void)?
+    
     let scrollView: UIScrollView = {
         let scroll = UIScrollView()
         scroll.translatesAutoresizingMaskIntoConstraints = false
@@ -68,7 +70,18 @@ class LogInViewController: UIViewController {
         return text
     }()
     
-    let loginButton = MagicButton(title: "Log In", titleColor: .white)
+    lazy var loginButton = MagicButton(title: "Log In", titleColor: .white) {
+            self.loginAction?()
+        }
+    
+//    init(delegate: LoginViewControllerDelegate) {
+//            self.delegate = delegate
+//            super.init(nibName: nil, bundle: nil)
+//        }
+//        
+//        required init?(coder: NSCoder) {
+//            nil
+//        }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,25 +116,6 @@ extension LogInViewController {
         loginButton.setBackgroundImage(trasparentImage, for: .disabled)
         loginButton.layer.cornerRadius = 10
         loginButton.clipsToBounds = true
-        
-        loginButton.onTap = {
-            var vc: ProfileViewController
-        #if DEBUG
-            vc = ProfileViewController(userService: TestUserService(), userName: "testUser")
-        #else
-            let name = loginTextField.text ?? ""
-            let password = passwordTextField.text ?? ""
-            let loginFactory = MyLoginFactory()
-            let checkedUser = loginFactory.checkUserLogin()
-            let status: Bool = checkedUser.didTapOnButton(self, enteredLogin: name, enteredPassword: password)
-            guard status else {
-                print("Try again")
-                return
-            }
-            vc = ProfileViewController(userService: CurrentUserService(), userName: name )
-        #endif
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
     }
 }
 
@@ -193,7 +187,6 @@ private extension LogInViewController {
 }
 
 protocol LoginViewControllerDelegate: AnyObject {
-
     func didTapOnButton(_ controller: UIViewController, enteredLogin: String, enteredPassword: String) -> Bool
 }
 
@@ -215,13 +208,13 @@ class LoginInspector: LoginViewControllerDelegate {
 
 /// *FACTORY*
 protocol LoginFactory {
-    func checkUserLogin() -> LoginInspector
+    func createChecker() -> LoginInspector
 }
 
 /// *FACTORY - IMPLEMENTATION*
 class MyLoginFactory: LoginFactory {
-  func checkUserLogin() -> LoginInspector {
-        let loginInspector = LoginInspector(useCase: checkerInstance)
+  func createChecker() -> LoginInspector {
+      let loginInspector = LoginInspector(useCase: Checker.instance)
         return loginInspector
     }
 }

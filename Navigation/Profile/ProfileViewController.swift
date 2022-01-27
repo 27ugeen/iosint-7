@@ -9,6 +9,8 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
+    var goToPhotoGalleryAction: (() -> Void)?
+    
     let tableView = UITableView(frame: .zero, style: .grouped)
     
     let cellID = String(describing: PostTableViewCell.self)
@@ -23,10 +25,9 @@ class ProfileViewController: UIViewController {
         self.userLoginName = userName
         super.init(nibName: nil, bundle: nil)
     }
-    
-    
+
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        nil
     }
     
     override func viewDidLoad() {
@@ -105,8 +106,7 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.row == 0 {
-            let photosVC = PhotosViewController()
-            navigationController?.pushViewController(photosVC, animated: true)
+            self.goToPhotoGalleryAction?()
         }
     }
     
