@@ -54,7 +54,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         return text
     }()
     
-    let setStatusButton: UIButton = {
+    lazy var setStatusButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .systemBlue.withAlphaComponent(0.7)

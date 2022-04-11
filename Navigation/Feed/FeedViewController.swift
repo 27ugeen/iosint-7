@@ -9,7 +9,7 @@ import UIKit
 
 class FeedViewController: UIViewController {
     
-    let buttonTop: UIButton = {
+   lazy var buttonTop: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Top Button", for: .normal)
@@ -20,7 +20,7 @@ class FeedViewController: UIViewController {
         return button
     }()
     
-    let buttonBot: UIButton = {
+    lazy var buttonBot: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Bot Button", for: .normal)

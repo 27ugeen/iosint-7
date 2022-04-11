@@ -12,6 +12,9 @@ import SnapKit
 class PhotosViewController: UIViewController {
     
     private var imagePublisherFacade = ImagePublisherFacade()
+    private let imageProcessor = ImageProcessor()
+    
+    private var imagesWithFilter: [UIImage] = []
     
     private var userImages: [UIImage]? {
         didSet {
@@ -25,7 +28,6 @@ class PhotosViewController: UIViewController {
         
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.backgroundColor = .white
-        
         collection.translatesAutoresizingMaskIntoConstraints = false
         
         collection.register(PhotosCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: PhotosCollectionViewCell.self))
@@ -39,21 +41,21 @@ class PhotosViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        
-        var cgImages = ImgStorage.arrImg.map {
-            image in
-            return image.cgImage
+
+        imageProcessor.processImagesOnThread(sourceImages: ImgStorage.arrImg, filter: .noir, qos: .userInitiated) { processedImages in
+            
+            for processedImg in processedImages {
+                if let unwruppedImg = processedImg {
+                    self.imagesWithFilter.append(UIImage(cgImage: unwruppedImg))
+                }
+            }
+            
+            DispatchQueue.main.async {
+                self.imagePublisherFacade.subscribe(self)
+                self.imagePublisherFacade.addImagesWithTimer(time: 1, repeat: self.imagesWithFilter.count, userImages: self.imagesWithFilter)
+            }
         }
-        
-        imagePublisherFacade.subscribe(self)
-        imagePublisherFacade.addImagesWithTimer(time: 1, repeat: ImgStorage.arrImg.count , userImages: ImgStorage.arrImg)
-        
         self.title = "Photo Gallery"
-    }
-    
-    deinit {
-        imagePublisherFacade.rechargeImageLibrary()
-        imagePublisherFacade.removeSubscription(for: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,6 +69,9 @@ class PhotosViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        
+        imagePublisherFacade.rechargeImageLibrary()
+        imagePublisherFacade.removeSubscription(for: self)
     }
 }
 
@@ -106,7 +111,7 @@ extension PhotosViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PhotosCollectionViewCell.self), for: indexPath) as! PhotosCollectionViewCell
         
-        cell.imageView.image = userImages?[indexPath.row]
+        cell.imageView.image = userImages?[indexPath.item]
         return cell
     }
 }
