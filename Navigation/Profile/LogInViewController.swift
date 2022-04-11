@@ -68,7 +68,7 @@ class LogInViewController: UIViewController {
         return text
     }()
     
-    let loginButton: UIButton = {
+    lazy var loginButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         
@@ -88,13 +88,13 @@ class LogInViewController: UIViewController {
     }()
     
     init(delegate: LoginViewControllerDelegate) {
-         self.delegate = delegate
-         super.init(nibName: nil, bundle: nil)
-     }
-
-     required init?(coder: NSCoder) {
-         nil
-     }
+        self.delegate = delegate
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        nil
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -119,9 +119,9 @@ class LogInViewController: UIViewController {
     @objc
     func buttonPressed() {
         var vc: ProfileViewController
-    #if DEBUG
+#if DEBUG
         vc = ProfileViewController(userService: TestUserService(), userName: "testUser")
-    #else
+#else
         let name = loginTextField.text ?? ""
         let password = passwordTextField.text ?? ""
         let status: Bool = delegate.didTapOnButton(self, enteredLogin: name, enteredPassword: password)
@@ -130,7 +130,7 @@ class LogInViewController: UIViewController {
             return
         }
         vc = ProfileViewController(userService: CurrentUserService(), userName: name )
-    #endif
+#endif
         navigationController?.pushViewController(vc, animated: true)
     }
 }
@@ -203,7 +203,7 @@ private extension LogInViewController {
 }
 
 protocol LoginViewControllerDelegate: AnyObject {
-
+    
     func didTapOnButton(_ controller: UIViewController, enteredLogin: String, enteredPassword: String) -> Bool
 }
 
@@ -216,7 +216,7 @@ class LoginInspector: LoginViewControllerDelegate {
     }
     
     func didTapOnButton(_ controller: UIViewController, enteredLogin: String, enteredPassword: String) -> Bool {
-         return loginUseCase.checkLoginPassword(userLogin: enteredLogin, userPassword: enteredPassword)
+        return loginUseCase.checkLoginPassword(userLogin: enteredLogin, userPassword: enteredPassword)
     }
 }
 
@@ -227,8 +227,8 @@ protocol LoginFactory {
 
 /// *FACTORY - IMPLEMENTATION*
 class MyLoginFactory: LoginFactory {
-  func createChecker() -> LoginInspector {
-      let loginInspector = LoginInspector(useCase: Checker.instance)
+    func createChecker() -> LoginInspector {
+        let loginInspector = LoginInspector(useCase: Checker.instance)
         return loginInspector
     }
 }
